@@ -1,6 +1,6 @@
 
 #script1.2
-#Data sample
+#Sampling
 #Grid search in parallel
 
 #Create a data sample
