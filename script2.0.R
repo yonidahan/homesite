@@ -112,29 +112,46 @@ QuoteNumber<-data$QuoteNumber
 data<-select(data,-QuoteNumber,-target)
 
 
-#Model
-d_train<-xgb.DMatrix(data=data.matrix(data[1:ntrain,]),label=target[1:ntrain])
+#Create a data sample
+sampling<-function(data,size=1000,seed=1306){
+        set.seed(seed)
+        smpl<-sample.int(n=ntrain,size=size,replace=F)
+        data_smpl<-data[smpl,]
+        return(data_smpl)
+}
 
-d_val<-xgb.DMatrix(data=data.matrix(data[sample(ntrain,2000),]),
-                   label=target[sample(ntrain,2000)])
+data_smpl<-sampling(data,size=1000,seed=1306)
 
-params<-list(objective="binary:logistic",
-            booster="gbtree",
-            eval_metric="auc",
-            eta=0.02,
-            max_depth=10,
-            subsample=0.85,
-            colsample_bytree=0.66
-        )
-watchlist<-list(val=d_val,train=d_train)
 
-model<-xgb.train(params=params,
-                 data=d_train,
-                 nrounds=30,
-                 verbose=1,
-                 maximize=F,
-                 watchlist=watchlist
-        )
+#XGBoost in parallel
+
+params<-list(etas=c(0.05,0.1,0.15,0.2),
+             max_depth=c(4,6,8,10),
+             subsample=c(0.5,0.7,0.85,0.95),
+             colsample_bytree=c(0.6,0.7,0.9,1),
+             nrounds=100
+             )
+
+#Chose: parameters to choose for grid search, otherwise defaults are those of XGBoost
+#More information: https://github.com/dmlc/xgboost or 
+#https://cran.r-project.org/web/packages/xgboost/xgboost.pdf
+search<-function(data=data_smpl,k_folds=10,params=params){
+        
+        
+        #Tuning grid
+        if(chose)
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
