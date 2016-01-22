@@ -117,7 +117,7 @@ QuoteNumber<-data$QuoteNumber
 data<-select(data,-QuoteNumber)
 
 
-#Model
+
 response<-data$response
 data<-select(data,-response)
 
