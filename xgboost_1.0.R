@@ -1,5 +1,5 @@
 
-#XGBoost 1.0
+#XGBoost 
 
 lapply(c("xgboost","dplyr","caret","data.table"),require,character.only=T)
 
